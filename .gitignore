@@ -1,5 +1,6 @@
 # client secret
 password.json
+password*.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

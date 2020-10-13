@@ -1,11 +1,14 @@
 from datetime import datetime, timezone, timedelta
+import re
 import json
 import praw
 
 HOUR_RECALL = 2
 ASTRISK_SIZE = 60
 SUBREDDIT_NAME = "buildapcsales"
-PASSWORD_FILE = "password.json"
+PASSWORD_FILE = "scripts/password.json"
+# we want to use a blacklist since the posts aren't consistent in the header format, better to filter out than filter in
+HIDDEN_MATCH = r'(?i)^\[((KEYBOARD)|(PSU)|(COOLER)|(Headphones)|(Speakers)|(Mobo)|(Motherboard)|(RAM)|(CPU))\].*$'
 
 def print_submission(post_time_local, post_title, post_permalink):
     print("\n" + "*" * ASTRISK_SIZE)
@@ -37,6 +40,6 @@ if __name__ == "__main__":
         post_permalink = f"https://reddit.com{submission.permalink}"
 
         if elapsed_time < timedelta(hours=HOUR_RECALL):
-            # hides spoiler and NSFW content (this usually marks a sale that is over)
-            if (submission.spoiler == False) and (submission.over_18 == False):
-                print_submission(post_time_local, submission.title, post_permalink)
+            if not re.search(re.compile(HIDDEN_MATCH), submission.title): # hide items in HIDDEN_MATCH
+                if (submission.spoiler == False) and (submission.over_18 == False):
+                    print_submission(post_time_local, submission.title, post_permalink)

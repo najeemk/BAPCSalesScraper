@@ -11,7 +11,7 @@ def prompt_client_information():
     user_agent = "python"
     return client_id, client_secret, user_agent
 
-def generate_json(client_id, client_secret, user_agent, file_name="password.json"):
+def generate_json(client_id, client_secret, user_agent, file_name="scripts/password.json"):
     '''
     Generates a JSON object with the client information
     client_id: str

@@ -29,6 +29,9 @@ def generate_json(client_id, client_secret, user_agent, file_name="password.json
         json.dump(client_information, write_file)
 
 if __name__ == "__main__":
+    print("First, lets generate the keys! Visit the link below to generate the keys")
+    print("https://github.com/reddit-archive/reddit/wiki/OAuth2-Quick-Start-Example#first-steps")
+    input("Press enter to continue...")
     client_id, client_secret, user_agent = prompt_client_information()
     generate_json(client_id, client_secret, user_agent)
 else:
